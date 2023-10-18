@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+       function automivil(marca, linea, modelo, cilindraje, precio) {
+            this.marca = marca; 
+            this.linea = linea;
+            this.modelo = modelo;
+            this.cilindraje = cilindraje;
+            this.precio = precio;
+        }       
+        const automivilPrototype = {
+
+            informacionVehiculo (){
+                console.log(`Informacion general del automivil: la marca es ${this.marca} ` + 
+                `su linea es ${this.linea} ` + `su modelo ${this.modelo} ` + 
+                `su cilindraje ${this.cilindraje} ` + `y su precio es ${this.precio}`);     
+            },
+            revicionTecnicoMecanica (){
+                console.log(`El ${this.marca} ${this.linea} modelo ${this.modelo},   `);
+
+                let año = (`${this.modelo}`); 
+                if (año > 2015) {
+                    console.log("Su tecnomecánica todavía está vigente");
+                } else {
+                    console.log("Este modelo tiene cinco años de antigüedad renueve la  técnico mecánica");
+                }
+
+               
+            },
+            nivelGasolina (){
+                let numeroAleatorio = Math.floor(Math.random() * 100) + 1;
+                console.log(`Su nivel de gasolina es: ${numeroAleatorio}`);
+            }  
+
+        }
+        
+        Object.assign(automivil.prototype, automivilPrototype);
+
+        let automuvil2 = new automivil('Renault', 'Duster', '2021', '2.0 L', ' $ 74.000.000 ');
+
+        console.log(` TAREA 1 : AUTOMOVIL`);
+        console.log({automuvil2});
+
+        
+        automuvil2.informacionVehiculo();
+        automuvil2.revicionTecnicoMecanica();
+        automuvil2.nivelGasolina();
+        console.log(`------------------------------------------------------`);
+
+        function sedan(marca, linea, modelo, cilindraje, precio, numeroPasajeros, tipoCaja) {
+            this.super = automivil;
+            this.super(marca, linea, modelo, cilindraje, precio);
+            this.numeroPasajeros = numeroPasajeros;
+            this.tipoCaja = tipoCaja;
+        }
+
+        sedan.prototype = new automivil();
+        sedan.prototype.constructor = automivil;
+
+        sedan.prototype.numeroCinturonesSeguridad = function(){
+            console.log(`EL  ${this.marca} tiene 4 cinturones de seguridad`);
+        }
+
+        sedan.prototype.informacionVehiculo = function(){
+            console.log(`EL  ${this.marca}  tiene una capacidad de ${this.numeroPasajeros} pasajeros ` +
+             ` su linea  ${this.linea} tiene una caja ${this.tipoCaja} y su precio es ${this.precio}`)
+        }
+
+        
+        let sedan1 = new sedan('Volkswagen', 'Gol', '2018', '4', '49.500.000', '4', 'Mecánica');
+        console.log(`TAREA 1 : HERENCIA = SEDAN`)
+        console.log({sedan1});
+
+        sedan1.numeroCinturonesSeguridad();
+        sedan1.informacionVehiculo();
+        console.log(`------------------------------------------------------`);
+
+
+
+        function Instructor(nombre, linea, jornada, programa) {
+            this.nombre = nombre;
+            this.linea = linea;
+            this.jornada = jornada;
+            
+        }
+        const InstructorPrototype = {
+            informacionInstructor(){
+                console.log(`El nombre del instructor es ${this.nombre}, ` + 
+                `su linea es ${this.linea} ` + `y la jornada  es ${this.jornada} ` )
+            },
+            programaFormacion(){
+                console.log(`El instructor ${this.nombre} ` + `da el progragrama de formacion: `);
+                
+                let programa00 = (`${this.linea}`);
+                if (programa00 ==='Software') {
+                    console.log('Análisis y desarrollo de software');
+                } else if (programa00 ==='hardware') {
+                    console.log('Administración de redes');
+                } else {
+                    console.log('no se tiene registro calificado para esas líneas tecnológicas');
+                }
+                
+            }
+        }
+        Object.assign(Instructor.prototype, InstructorPrototype);
+
+        let instructor1 = new Instructor(`JORGE ORLANDO`, `Software`, `Tarde`);
+        console.log(`TAREA 2 : INSTRUCTOR`);
+
+        console.log({instructor1});
+        instructor1.informacionInstructor();
+        instructor1.programaFormacion();
+        console.log(`------------------------------------------------------`);
+
+        function  instructorPlanta(nombre, linea, jornada, programa, fechaVinculacion) {
+            this.super= Instructor;
+            this.super(nombre, linea, jornada, programa);
+            this.fechaVinculacion = fechaVinculacion;
+        }
+        instructorPlanta.prototype = new Instructor();
+        instructorPlanta.prototype.constructor = Instructor;
+
+        instructorPlanta.prototype.informacionInstructor = function(){
+            console.log(`El nombre del instructor es ${this.nombre}, ` + 
+            `su linea es ${this.linea} ` + `y la jornada  es ${this.jornada} ` )
+        }
+        instructorPlanta.prototype.tiempoVinculacion = function(){
+            console.log(`El instructor ${this.nombre} ` + 
+            ` ingreso a las instalaciones hace :`);
+            let fechaVinculacion = this.fechaVinculacion;
+            let partesFecha = fechaVinculacion.split('/');
+            let dia = parseInt(partesFecha[0], 10);
+            let mes = parseInt(partesFecha[1], 10) - 1; 
+            let año = parseInt(partesFecha[2], 10);
+
+            let fechaObjeto = new Date(año, mes, dia);
+            
+            let hoy = new Date();
+            
+            let diferenciaEnMeses = (hoy.getFullYear() - fechaObjeto.getFullYear()) * 12 + hoy.getMonth() - fechaObjeto.getMonth();
+            
+            console.log(`${diferenciaEnMeses} meses.`);
+
+
+            
+        }
+        let instructorPlanta1 = new instructorPlanta (`Wilmer`, `Software`, `Tarde`,
+                                 `Análisis y desarrollo de software`, "20/05/2019");
+
+
+        console.log(`TAREA 2 : HERENCIA = INSTRUCTOR PLANTA`);
+        console.log({instructorPlanta1});
+
+        instructorPlanta1.informacionInstructor();
+        instructorPlanta1.tiempoVinculacion();
+        console.log(`------------------------------------------------------`);
+
+
+        function  Restaurante(plato, cantidad, precio) {
+            this.plato = plato;
+            this.cantidad = cantidad;
+            this.precio = precio;
+        }
+        const restaurantePrototype = {
+            pedidoRestaurante(){
+                console.log(`Pedido : ${this.cantidad} ${this.plato}`);
+            },
+            valorPedido() {
+                let precioTotal = this.cantidad * this.precio;
+                console.log(`El precio total es: ${precioTotal}`);
+                
+            },
+
+           
+            descuentoPedido(){
+               let precioo = this.cantidad * this.precio;
+               if (precioo > 50000) {
+                 let calculo =  ((this.cantidad * this.precio) * 0.1    );
+                 let todo = (precioo - calculo);
+                console.log(`Tines  descuento del 10% por compras mayor a 50000, total a pagar :${todo}`);
+               } else {
+                let precioTotal1 = this.cantidad * this.precio;
+                console.log( `Si haces compras mayores a 50000 tendras un 10% total a pagar: ${precioTotal1}` );
+               }
+                  
+            }
+            
+
+        }
+        Object.assign(Restaurante.prototype, restaurantePrototype);
+
+        let cliente1 = new Restaurante(`empanadas`, 50, 1500);
+        console.log(`TAREA 3 : RESTAURANTE`);
+        console.log({cliente1});
+
+        cliente1.pedidoRestaurante();
+        cliente1.valorPedido();
+        cliente1.descuentoPedido();
+        console.log(`------------------------------------------------------`);
+
+        function  restauranteDomicilio(plato, cantidad, precio, tiempoEntrega, valorDomicilio) {
+            this.super = Restaurante;
+            this.super(plato, cantidad, precio);
+            this.tiempoEntrega = tiempoEntrega;
+            this.valorDomicilio = valorDomicilio;
+        }
+        restauranteDomicilio.prototype.informacionRestaurante = function(){
+            console.log(`Nuestro platos son ${this.plato} con una cantidad aproximada`+
+                        ` de productos entre : ${this.cantidad}`+ 
+                         ` con precios de : ${this.precio}`);
+        }
+        restauranteDomicilio.prototype.valorPedido = function(){
+            let precioo7 = this.cantidad * this.precio;
+               if (precioo7 > 50000) {
+                 let calculo7 =  ((this.cantidad * this.precio) * 0.1    );
+                 let todo7 = (precioo7 - calculo7);
+                 let envi = (todo7 + this.valorDomicilio);
+                 
+                console.log(`Costo de envio ${this.valorDomicilio} + costo pedido con el 10% ${todo7} en total : ${envi}.       ` + 
+                `***tiempo de llegada ${this.tiempoEntrega}***`);
+               } else {
+                let precioTotal7 = this.cantidad * this.precio;
+                let envi2 = precioTotal7 + this.valorDomicilio;
+                console.log( `Costo envio ${this.valorDomicilio} + costo del pedido ${precioTotal7}               en total : ${envi2}       ` + 
+                            `***tiempo de llegada ${this.tiempoEntrega}***` );
+               }
+        }
+        
+        let info = new restauranteDomicilio(`empanadas, papas, pollo`, `20-80`, `1500 a 2000`);
+        console.log(`TAREA 3 : HERENCIA = RESTAURANTE DOMICILIO`);
+        console.log({info});
+        info.informacionRestaurante();
+
+        let pedido7 = new restauranteDomicilio(`empanadas`, 50, 1500, `30 a 50 minutos`, 5000);
+        console.log({pedido7});
+        pedido7.valorPedido();
+        console.log(`------------------------------------------------------`); 
+           
+    </script>
+</body>
+</html>
